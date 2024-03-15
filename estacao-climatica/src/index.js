@@ -13,7 +13,7 @@ class App extends React.Component {
             estacao: null,
             data: null,
             icone: null, 
-            erro: null
+            mensagemDeErro: null
         }
     }
 
@@ -60,7 +60,7 @@ class App extends React.Component {
                 })
             },
             (erro) => {
-                this.setState({ erro: 'Por favor, permita o acesso à sua localização' })
+                this.setState({ mensagemDeErro: 'Por favor, permita o acesso à sua localização' })
             }
         )
     }
@@ -89,11 +89,9 @@ class App extends React.Component {
                                     <p className="text-center">
                                         {
                                             this.state.latitude ? 
-                                            `Coords: ${this.state.latitude},${this.state.longitude}. Data: ${this.state.data}` : 
+                                            `Coords: ${this.state.latitude},${this.state.longitude}. Data: ${this.state.data}` : this.state.mensagemDeErro ? `${this.state.mensagemDeErro}`:
                                             `Clique no botão para saber sua estação climática`
                                         }
-                                    </p>
-                                    <p className="text-center text-danger">{this.state.erro}
                                     </p>
                                 </div>
 
@@ -127,3 +125,4 @@ ReactDOM.render(
     <App/>,
     document.querySelector('#root')
 )
+
