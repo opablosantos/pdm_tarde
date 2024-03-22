@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import ReactDOM from 'react-dom'
 import React from 'react'
 import EstacaoClimatica from './EstacaoClimatica'
+import Loading from './Loading'
 class App extends React.Component{
   // constructor(props){
   //   super(props)
@@ -25,6 +26,10 @@ class App extends React.Component{
     data: null,
     icone: null,
     mensagemDeErro: null
+  }
+
+  componentDidMount(){
+    this.obterLocalizacao()
   }
 
   componentDidUpdate(){
@@ -101,19 +106,21 @@ class App extends React.Component{
           <div className="row justify-content-center">
             <div className="col-12 col-md-8">
               {
-                this.state.mensagemDeErro ? 
-                <p className='border-rounded p-2 fs-1 text-center'>
+                !this.state.latitude && !this.state.mensagemDeErro ?
+                  <Loading mensagem="Por favor, libere o acesso"/> :
+                this.state.mensagemDeErro ?
+                <p className='border rounded p-2 fs-1 text-center'>
                   É preciso dar acesso. Por favor, refaça o procedimento.
-                </p> :
-              <EstacaoClimatica 
-                latitude={this.state.latitude}
-                longitude={this.state.longitude}
-                estacao={this.state.estacao}
-                data={this.state.data}
-                icone={this.state.icone}
-                mensagemDeErro={this.state.mensagemDeErro}
-                obterLocalizacao={this.obterLocalizacao}
-              />
+                </p>:
+                <EstacaoClimatica 
+                  latitude={this.state.latitude}
+                  longitude={this.state.longitude}
+                  estacao={this.state.estacao}
+                  data={this.state.data}
+                  icone={this.state.icone}
+                  mensagemDeErro={this.state.mensagemDeErro}
+                  obterLocalizacao={this.obterLocalizacao}
+                />
               }
             </div>
           </div>
